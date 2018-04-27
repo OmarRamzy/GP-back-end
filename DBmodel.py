@@ -57,3 +57,9 @@ class Store(Base):
     location_id = Column(Integer, ForeignKey('location.id'),
                          nullable=False)
     location = relationship('Location')
+
+
+class Location(Base):
+    id = Column(Integer, primary_key=True)
+    x = Column(Float(10), nullable=False)
+    y = Column(Float(10), nullable=False)
