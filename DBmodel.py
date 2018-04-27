@@ -63,3 +63,8 @@ class Location(Base):
     id = Column(Integer, primary_key=True)
     x = Column(Float(10), nullable=False)
     y = Column(Float(10), nullable=False)
+
+
+class Service(Base):
+    id = Column(Integer, primary_key=True)
+    type = Column(String, nullable=False)
