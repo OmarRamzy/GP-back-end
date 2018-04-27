@@ -31,3 +31,21 @@ class User(Base):
         'polymorphic_identity': 'user',
         'polymorphic_on': type
     }
+
+
+# owner related models
+
+class Owner(User):
+    __tablename__ = 'owner'
+    id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    money_amount = Column(Integer, default=0)
+    store_id = Column(Integer, ForeignKey('store.id'),
+                      nullable=False)
+    service_type_id = Column(Integer, ForeignKey('service.id'),
+                             nullable=False)
+    store = relationship('Store')
+    service = relationship('Service')
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'owner',
+    }
