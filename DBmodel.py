@@ -49,3 +49,11 @@ class Owner(User):
     __mapper_args__ = {
         'polymorphic_identity': 'owner',
     }
+
+
+class Store(Base):
+    id = Column(Integer, primary_key=True)
+    name = Column(String(32), nullable=False)
+    location_id = Column(Integer, ForeignKey('location.id'),
+                         nullable=False)
+    location = relationship('Location')
