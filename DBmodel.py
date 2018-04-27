@@ -68,3 +68,18 @@ class Location(Base):
 class Service(Base):
     id = Column(Integer, primary_key=True)
     type = Column(String, nullable=False)
+
+
+# Customer related models
+
+class Customer(User):
+    __tablename__ = 'customer'
+    id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'customer',
+    }
+
+
+engine = create_engine('sqlite:///transportation.db')
+Base.metadata.create_all(engine)
