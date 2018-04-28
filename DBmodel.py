@@ -52,6 +52,7 @@ class Owner(User):
 
 
 class Store(Base):
+    __tablename__ = 'store'
     id = Column(Integer, primary_key=True)
     name = Column(String(32), nullable=False)
     location_id = Column(Integer, ForeignKey('location.id'),
@@ -60,12 +61,14 @@ class Store(Base):
 
 
 class Location(Base):
+    __tablename__ = 'location'
     id = Column(Integer, primary_key=True)
     x = Column(Float(10), nullable=False)
     y = Column(Float(10), nullable=False)
 
 
 class Service(Base):
+    __tablename__ = 'service'
     id = Column(Integer, primary_key=True)
     type = Column(String, nullable=False)
 
