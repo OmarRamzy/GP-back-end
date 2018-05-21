@@ -63,8 +63,8 @@ class Store(Base):
 class Location(Base):
     __tablename__ = 'location'
     id = Column(Integer, primary_key=True)
-    x = Column(Float(10), nullable=False)
-    y = Column(Float(10), nullable=False)
+    lat = Column(Float(10), nullable=False)
+    lang = Column(Float(10), nullable=False)
 
 
 class Service(Base):
