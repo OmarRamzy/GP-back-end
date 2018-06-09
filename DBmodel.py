@@ -83,6 +83,19 @@ class Customer(User):
         'polymorphic_identity': 'customer',
     }
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'identity': self.identity,
+            'rate': self.rate,
+            'phone': self.phone,
+            'activate': self.activated
+        }
+
 
 engine = create_engine('sqlite:///transportation.db')
 Base.metadata.create_all(engine)
