@@ -19,7 +19,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     first_name = Column(String(32), nullable=False)
     last_name = Column(String(32), nullable=False)
-    email = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
     password = Column(String(64), nullable=False)
     identity = Column(String(14), nullable=False)
     rate = Column(Float)
