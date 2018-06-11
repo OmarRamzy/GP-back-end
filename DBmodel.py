@@ -46,6 +46,21 @@ class Owner(User):
     store = relationship('Store')
     service = relationship('Service')
 
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'identity': self.identity,
+            'rate': self.rate,
+            'phone': self.phone,
+            'activate': self.activated,
+            'service_type_id': self.service_type_id
+        }
+
     __mapper_args__ = {
         'polymorphic_identity': 'owner',
     }

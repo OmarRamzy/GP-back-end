@@ -1,8 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from DBmodel import (Base,
-                     Customer
-                     )
+from DBmodel import (Base, Customer)
 
 
 engine = create_engine('sqlite:///transportation.db')
