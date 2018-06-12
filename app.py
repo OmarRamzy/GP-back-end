@@ -112,8 +112,8 @@ def create_store():
                   location_id= request.json['location_id'])
     session.add(store)
     session.commit()
- #   return jsonify({"Message": "Store Created!"})
-    return jsonify({store.serialize})
+    return jsonify({"Message": "Store Created!"})
+   # return jsonify({store.serialize})     Return Error Message typeerror unhashable type dict flask
 
 
 # Get Active Stores in System
