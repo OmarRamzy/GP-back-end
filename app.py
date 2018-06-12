@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask , redirect,render_template ,request ,url_for , jsonify
-from DBmodel import Base , Customer , Owner
+from DBmodel import Base, Customer, Owner, User
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -21,8 +21,9 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/users' , methods =['GET'])
 def get_all_users():
-    Users = session.query(Customer).all()
-    return jsonify(Current=[i.serialize for i in Users])
+   # Users = session.query(Customer).all()
+    Users = session.query(Owner).all()
+    return jsonify(CurrentUsers=[i.serialize for i in Users])
 
 
 # add new Customer to Database
@@ -78,6 +79,7 @@ def add_owner():
                       )
     session.add(owner)
     session.commit()
+    return "Owner Added"
 
 
 

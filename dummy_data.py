@@ -53,9 +53,9 @@ cumstomer4 = Customer(first_name="Khaled",
 session.add(cumstomer4)
 session.commit()
 
-owner = Owner(first_name="Khaled",
-                      last_name="Ibrahim",
-                      email="khaled@gmail.com",
+owner = Owner(first_name="owner",
+                      last_name="owner",
+                      email="khed@gmail.com",
                       password="khaled123",
                       identity="12345678912365",
                       rate=0.0,

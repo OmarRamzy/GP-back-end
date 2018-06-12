@@ -28,8 +28,8 @@ class User(Base):
     type = Column(String(50))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'user',
-        'polymorphic_on': type
+        'polymorphic_identity':'user',
+        'polymorphic_on':type
     }
 
 
@@ -43,7 +43,6 @@ class Owner(User):
    # service_type_id = Column(Integer, ForeignKey('service.id'),
    #                          nullable=False)
    # service = relationship('Service')
-
 
     @property
     def serialize(self):
