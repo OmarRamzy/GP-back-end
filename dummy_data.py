@@ -54,6 +54,7 @@ session.add(cumstomer4)
 session.commit()
 
 owner = Owner(first_name="owner",
+                      id = 1 ,
                       last_name="owner",
                       email="khed@gmail.com",
                       password="khaled123",
@@ -62,6 +63,18 @@ owner = Owner(first_name="owner",
                       phone="12345698742",
                     )
 session.add(owner)
+session.commit()
+
+owner1 = Owner(first_name="owner2",
+                      id = 2 ,
+                      last_name="owner",
+                      email="khed@gmail.com",
+                      password="khaled123",
+                      identity="12345678912365",
+                      rate=0.0,
+                      phone="12345698742",
+                    )
+session.add(owner1)
 session.commit()
 
 location = Location(lat=11.23,

@@ -79,9 +79,9 @@ class Store(Base):
         return {
             'id': self.id,
             'name': self.name,
-       #     'owner': self.owner,
+            'owner': self.owner.serialize,
             'status':self.status,
-        #    'location':self.location
+            'location':self.location.serialize
         }
 
 
