@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from DBmodel import (Base, Customer , Owner )
+from DBmodel import (Base, Customer , Owner , Location )
 
 
 engine = create_engine('sqlite:///transportation.db')
@@ -63,5 +63,16 @@ owner = Owner(first_name="owner",
                     )
 session.add(owner)
 session.commit()
+
+location = Location(lat=11.23,
+                    lang=12.556)
+session.add(location)
+session.commit()
+
+location1 = Location(lat=18.23,lang=177.556)
+session.add(location1)
+session.commit()
+
+
 
 print "dummy data successfully added"

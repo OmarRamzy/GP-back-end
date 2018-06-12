@@ -68,17 +68,36 @@ class Store(Base):
     __tablename__ = 'store'
     id = Column(Integer, primary_key=True)
     name = Column(String(32), nullable=False)
-    location_id = Column(Integer, ForeignKey('location.id'),
-                         nullable=False)
+    status=Column(Boolean , default=False)
+    location_id = Column(Integer, ForeignKey('location.id'), nullable=False)
     owner_id = Column(Integer , ForeignKey('owner.id'),nullable=False )
     location = relationship('Location')
     owner = relationship('Owner')
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+       #     'owner': self.owner,
+            'status':self.status,
+        #    'location':self.location
+        }
+
 
 class Location(Base):
     __tablename__ = 'location'
     id = Column(Integer, primary_key=True)
     lat = Column(Float(10), nullable=False)
     lang = Column(Float(10), nullable=False)
+
+    @property
+    def serialize(self):
+        return {
+                'id': self.id,
+                'lat': self.lat,
+                'lang': self.lang
+                }
 
 
 class Service(Base):
@@ -113,3 +132,5 @@ class Customer(User):
 
 engine = create_engine('sqlite:///transportation.db')
 Base.metadata.create_all(engine)
+
+#print "Database Created!"
