@@ -39,12 +39,10 @@ class Owner(User):
     __tablename__ = 'owner'
     id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     money_amount = Column(Integer, default=0)
-    store_id = Column(Integer, ForeignKey('store.id'),
-                      nullable=False)
-    service_type_id = Column(Integer, ForeignKey('service.id'),
-                             nullable=False)
-    store = relationship('Store')
-    service = relationship('Service')
+
+   # service_type_id = Column(Integer, ForeignKey('service.id'),
+   #                          nullable=False)
+   # service = relationship('Service')
 
 
     @property
@@ -58,7 +56,8 @@ class Owner(User):
             'rate': self.rate,
             'phone': self.phone,
             'activate': self.activated,
-            'service_type_id': self.service_type_id
+            'money_amount': self.money_amount
+          #  'service_type_id': self.service_type_id
         }
 
     __mapper_args__ = {
@@ -72,8 +71,9 @@ class Store(Base):
     name = Column(String(32), nullable=False)
     location_id = Column(Integer, ForeignKey('location.id'),
                          nullable=False)
+    owner_id = Column(Integer , ForeignKey('owner.id'),nullable=False )
     location = relationship('Location')
-
+    owner = relationship('Owner')
 
 class Location(Base):
     __tablename__ = 'location'

@@ -11,7 +11,7 @@ engine = create_engine("sqlite:///transportation.db")
 Base.metadata.bind = engine
 DBSession = sessionmaker (bind=engine)
 session = DBSession()
-conn = sqlite3.connect('transportation.db')
+conn = sqlite3.connect('transportation.db' , check_same_thread=False)
 
 # app configuration
 app = Flask(__name__)
@@ -75,7 +75,7 @@ def add_owner():
                       identity=request.json['identity'],
                       rate=0.0,
                       phone=request.json['phone'],
-                      service_type_id =request.json['service_type_id'])
+                      )
     session.add(owner)
     session.commit()
 

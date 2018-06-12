@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from DBmodel import (Base, Customer)
+from DBmodel import (Base, Customer , Owner )
 
 
 engine = create_engine('sqlite:///transportation.db')
@@ -53,5 +53,15 @@ cumstomer4 = Customer(first_name="Khaled",
 session.add(cumstomer4)
 session.commit()
 
+owner = Owner(first_name="Khaled",
+                      last_name="Ibrahim",
+                      email="khaled@gmail.com",
+                      password="khaled123",
+                      identity="12345678912365",
+                      rate=0.0,
+                      phone="12345698742",
+                    )
+session.add(owner)
+session.commit()
 
 print "dummy data successfully added"
