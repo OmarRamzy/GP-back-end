@@ -13,9 +13,9 @@ cumstomer1 = Customer(first_name="Hossam",
                       last_name="Khaled",
                       email="hossam@gmail.com",
                       password="hossam123",
-                      identity="12345678912365",
+                      identity="12cx345678912365",
                       rate=0.0,
-                      phone="12345698742",
+                      phone="1234569c8742",
                       )
 session.add(cumstomer1)
 session.commit()
@@ -24,9 +24,9 @@ cumstomer2 = Customer(first_name="Omar",
                       last_name="Ramzi",
                       email="omar@gmail.com",
                       password="omar123",
-                      identity="12345678912365",
+                      identity="12345xsa678912365",
                       rate=0.0,
-                      phone="12345698742",
+                      phone="123456987dsa42",
                       )
 session.add(cumstomer2)
 session.commit()
@@ -35,9 +35,9 @@ cumstomer3 = Customer(first_name="Sayed",
                       last_name="Ashref",
                       email="sayed@gmail.com",
                       password="sayed123",
-                      identity="12345678912365",
+                      identity="1234567dsade8912365",
                       rate=0.0,
-                      phone="12345698742",
+                      phone="123456987qeq42",
                       )
 session.add(cumstomer3)
 session.commit()
@@ -46,9 +46,9 @@ cumstomer4 = Customer(first_name="Khaled",
                       last_name="Ibrahim",
                       email="khaled@gmail.com",
                       password="khaled123",
-                      identity="12345678912365",
+                      identity="123456789ew12365",
                       rate=0.0,
-                      phone="12345698742",
+                      phone="12345698742aa",
                       )
 session.add(cumstomer4)
 session.commit()
@@ -57,9 +57,9 @@ owner = Owner(first_name="Adel",
               last_name="Ramzy",
                       email="ownmer1@gmail.com",
                       password="khaled123",
-                      identity="12345678912365",
+                      identity="a12345678912365",
                       rate=0.0,
-                      phone="12345698742",
+                      phone="a12345698742",
                     )
 session.add(owner)
 session.commit()
@@ -69,9 +69,9 @@ owner1 = Owner(first_name="Mohamed",
                       last_name="Ramzy",
                       email="owner2@gmail.com",
                       password="khaled123",
-                      identity="12345678912365",
+                      identity="aa12345678912365",
                       rate=0.0,
-                      phone="123456a98742",
+                      phone="aa123456a98742",
                     )
 session.add(owner1)
 session.commit()
@@ -81,9 +81,9 @@ owner3 = Owner(first_name="Omar",
                       last_name="Ramzy",
                       email="owner3@gmail.com",
                       password="khaled123",
-                      identity="12345678912365",
+                      identity="aaa12345678912365",
                       rate=0.0,
-                      phone="123456ssa98742",
+                      phone="aaa123456ssa98742",
                     )
 session.add(owner3)
 session.commit()
