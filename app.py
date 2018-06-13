@@ -120,13 +120,15 @@ def create_store():
 # Get Active Stores in System
 @app.route('/store/actives', methods=['GET'])
 def get_active_stores():
-    return jsonify({"Message": "Get Active Store!"})
+    stores = session.query(Store).filter_by(status=True).all()
+    return jsonify(ActiveStores =[i.serialize for i in stores])
+   # return jsonify({"Message": "Get Active Store!"})
 
 
 # Set store Active to be visible on the map
-@app.route('/store/<int:store_id>/active', methods = ['PUT'])
-def active_store(store_id):
-    store = session.query(Store).filter_by(id=store_id).one()
+@app.route('/store/active', methods=['PUT'])
+def active_store():
+    store = session.query(Store).filter_by(id= request.json['store_id']).one()
     store.status = True
     session.add(store)
     session.commit()
@@ -134,23 +136,32 @@ def active_store(store_id):
     return jsonify({"Message": "Store Active now!"})
 
 
-# Set store Inactive to be Invisible on the map
-@app.route('/store/<int:store_id>/inactive')
-def inactive_store(store_id):
-    return jsonify(All=[{"Message": "Store is Inactive Now!"},{"Location":"Heey"}])
+# Set store Inactive to be Invisible on the map ( Need locationID )
+@app.route('/store/inactive', methods = ['PUT'])
+def inactive_store():
+    store = session.query(Store).filter_by(id=request.json['store_id']).one()
+    store.status = False
+    session.add(store)
+    session.commit()
+    return jsonify({"Message": "Store is Inactive Now!"})
 
 
 #Delete Store
-@app.route('/store/<int:store_id>/delete')
-def delete_store(store_id):
+@app.route('/store/delete', methods =['DELETE'])
+def delete_store():
+    store = session.query(Store).filter_by(id= request.json['store_id']).one()
+    session.delete(store)
+    session.commit()
     return jsonify({"Message": "Store Deleted!"})
 
 
+# ***************Test Method*****************
 #Get Stores
-@app.route('/stores' , methods=['GET'])
+@app.route('/stores', methods=['GET'])
 def get_all_stores():
     stores = session.query(Store).all()
     return jsonify([i.serialize for i in stores])
+
 
 #Add Location to DataBase
 @app.route('/location/new' , methods=['POST' , 'GET'])
@@ -161,11 +172,13 @@ def set_location():
     session.commit()
     return jsonify(location.serialize)
 
-#get Locations
+
+#get Locations  **** Test Method***********
 @app.route('/locations' , methods=['GET'])
 def get_all_locations():
     locations = session.query(Location).all()
     return jsonify([i.serialize for i in locations])
+
 
 if __name__ == '__main__':
     app.secret_key = 'MUCMCJUMDPQKBHJOTFWKOKZVNZYQDFPJ'
