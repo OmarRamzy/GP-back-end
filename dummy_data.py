@@ -53,10 +53,9 @@ cumstomer4 = Customer(first_name="Khaled",
 session.add(cumstomer4)
 session.commit()
 
-owner = Owner(first_name="owner",
-
-                      last_name="owner",
-                      email="khed@gmail.com",
+owner = Owner(first_name="Adel",
+              last_name="Ramzy",
+                      email="ownmer1@gmail.com",
                       password="khaled123",
                       identity="12345678912365",
                       rate=0.0,
@@ -65,17 +64,31 @@ owner = Owner(first_name="owner",
 session.add(owner)
 session.commit()
 
-owner1 = Owner(first_name="owner2",
+owner1 = Owner(first_name="Mohamed",
 
-                      last_name="owner",
-                      email="khed@gmail.com",
+                      last_name="Ramzy",
+                      email="owner2@gmail.com",
                       password="khaled123",
                       identity="12345678912365",
                       rate=0.0,
-                      phone="12345698742",
+                      phone="123456a98742",
                     )
 session.add(owner1)
 session.commit()
+
+owner3 = Owner(first_name="Omar",
+
+                      last_name="Ramzy",
+                      email="owner3@gmail.com",
+                      password="khaled123",
+                      identity="12345678912365",
+                      rate=0.0,
+                      phone="123456ssa98742",
+                    )
+session.add(owner3)
+session.commit()
+
+
 
 location = Location(lat=11.23,
                     lang=12.556)
@@ -86,12 +99,38 @@ location1 = Location(lat=18.23,lang=177.556)
 session.add(location1)
 session.commit()
 
-store = Store (name = "Omar Ramzy",
+location2 = Location(lat=177.23,lang=1757.556)
+session.add(location2)
+session.commit()
+
+
+
+store = Store (name = "Omar Ramzy Store",
                location_id = 1 ,
-               owner_id = 5,
+               owner_id = 7,
                type='car')
 
 session.add(store)
 session.commit()
+
+store2 = Store(name = "Mohamed Ramzy Store",
+               location_id = 2 ,
+               owner_id = 6,
+               type='bike')
+
+session.add(store2)
+session.commit()
+
+store3 = Store(name = "Adel Ramzy Store",
+               location_id = 3 ,
+               owner_id = 5,
+               type='car')
+
+session.add(store3)
+session.commit()
+
+
+
+
 
 print "dummy data successfully added"

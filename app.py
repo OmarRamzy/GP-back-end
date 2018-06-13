@@ -109,7 +109,8 @@ def add_owner():
 def create_store():
     store = Store(name=request.json['name'],
                   owner_id=request.json['owner_id'],
-                  location_id= request.json['location_id'])
+                  location_id= request.json['location_id'],
+                  type = request.json['type'])
     session.add(store)
     session.commit()
     return jsonify({"Message": "Store Created!"})
