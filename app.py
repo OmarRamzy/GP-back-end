@@ -160,6 +160,11 @@ def set_location():
     session.commit()
     return jsonify(location.serialize)
 
+#get Locations
+@app.route('/locations' , methods=['GET'])
+def get_all_locations():
+    locations = session.query(Location).all()
+    return jsonify([i.serialize for i in locations])
 
 if __name__ == '__main__':
     app.secret_key = 'MUCMCJUMDPQKBHJOTFWKOKZVNZYQDFPJ'

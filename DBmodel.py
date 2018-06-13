@@ -68,7 +68,8 @@ class Store(Base):
     __tablename__ = 'store'
     id = Column(Integer, primary_key=True)
     name = Column(String(32), nullable=False)
-    status=Column(Boolean , default=False)
+    type = Column(String(32), nullable=False)
+    status= Column(Boolean , default=False)
     location_id = Column(Integer, ForeignKey('location.id'), nullable=False)
     owner_id = Column(Integer , ForeignKey('owner.id'),nullable=False )
     location = relationship('Location')
@@ -79,8 +80,9 @@ class Store(Base):
         return {
             'id': self.id,
             'name': self.name,
+            'type':self.type,
             'owner': self.owner.serialize,
-            'status':self.status,
+            'status': self.status,
             'location':self.location.serialize
         }
 

@@ -88,7 +88,8 @@ session.commit()
 
 store = Store (name = "Omar Ramzy",
                location_id = 1 ,
-               owner_id = 1)
+               owner_id = 5,
+               type='car')
 
 session.add(store)
 session.commit()
