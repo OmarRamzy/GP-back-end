@@ -132,6 +132,31 @@ class Customer(User):
         }
 
 
+class Car(Base):
+    __tablename__= 'car'
+    id = Column(Integer, primary_key=True)
+    model = Column(String(25))
+    type = Column(String(10))
+    number = Column(String(20) , unique=True)
+    active = Column(Boolean, default=True)
+ #   licence = Column(String(25) , nullable=True)  # Don't Know type of licence
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'car',
+        'polymorphic_on': type
+    }
+
+class PrivateCar(Car):
+    __tablename__ = 'privateCar'
+    id = Column(Integer, ForeignKey('car.id') , primary_key=True)
+    store_id = Column(Integer , ForeignKey('store.id'),nullable=False )
+    store = relationship('Store')
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'privateCar',
+    }
+
+
 engine = create_engine('sqlite:///transportation.db')
 Base.metadata.create_all(engine)
 
