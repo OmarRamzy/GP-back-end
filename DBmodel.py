@@ -7,8 +7,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import func
 from passlib.apps import custom_app_context as pwd_context
 
+# importing itsdangrous
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
+                          BadSignature,
+                          SignatureExpired)
+import random, string
 
 Base = declarative_base()
+secret_key = ''.join(
+    random.choice(string.ascii_uppercase+string.digits)
+    for x in range(32))
 
 
 class User(Base):
@@ -20,7 +28,7 @@ class User(Base):
     first_name = Column(String(32), nullable=False)
     last_name = Column(String(32), nullable=False)
     email = Column(String, nullable=False, unique=True)
-    password = Column(String(64), nullable=False)
+    password = Column(String(64), nullable=True)
     identity = Column(String(14), nullable=False)
     rate = Column(Float)
     phone = Column(String(11), nullable=False)
@@ -32,9 +40,32 @@ class User(Base):
         'polymorphic_on': type
     }
 
+    def hash_password(self, password):
+        self.password = pwd_context.encrypt(password)
+
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password)
+
+    def generate_auth_token(self, expiration=600):
+        s = Serializer(secret_key, expires_in=expiration)
+        return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(secret_key)
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            # Valid Token, but expired
+            return None
+        except BadSignature:
+            # Invalid Token
+            return None
+        user_id = data['id']
+        return user_id
+
 
 # owner related models
-
 class Owner(User):
     __tablename__ = 'owner'
     id = Column(Integer, ForeignKey('user.id'), primary_key=True)
