@@ -146,14 +146,29 @@ class Car(Base):
         'polymorphic_on': type
     }
 
+
 class PrivateCar(Car):
     __tablename__ = 'privateCar'
     id = Column(Integer, ForeignKey('car.id') , primary_key=True)
-    store_id = Column(Integer , ForeignKey('store.id'),nullable=False )
+    store_id = Column(Integer, ForeignKey('store.id'), nullable=False )
     store = relationship('Store')
 
     __mapper_args__ = {
         'polymorphic_identity': 'privateCar',
+    }
+
+
+class HeavyCar(Car):
+    tablename__ = 'heavyCar'
+    id = Column(Integer, ForeignKey('car.id'), primary_key=True)
+    location_id = Column(Integer, ForeignKey('location.id'), nullable=False)
+    location = relationship('Location')
+    image= Column(String(100), nullable=False)
+    owner_id = Column(Integer, ForeignKey('owner.id'), nullable=False)
+    owner = relationship('Owner')
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'heavyCar',
     }
 
 
