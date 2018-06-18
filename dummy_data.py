@@ -14,46 +14,48 @@ session = DBsession()
 cumstomer1 = Customer(first_name="Hossam",
                       last_name="Khaled",
                       email="hossam@gmail.com",
-                      password="hossam123",
                       identity="12345678912365",
                       rate=0.0,
                       phone="12345698742",
                       )
+cumstomer1.hash_password("hossam123")
 session.add(cumstomer1)
 session.commit()
 
 cumstomer2 = Customer(first_name="Omar",
                       last_name="Ramzi",
                       email="omar@gmail.com",
-                      password="omar123",
                       identity="12345678912365",
                       rate=0.0,
                       phone="12345698742",
                       )
+cumstomer2.hash_password("omar123")
 session.add(cumstomer2)
 session.commit()
 
 cumstomer3 = Customer(first_name="Sayed",
                       last_name="Ashref",
                       email="sayed@gmail.com",
-                      password="sayed123",
                       identity="12345678912365",
                       rate=0.0,
                       phone="12345698742",
                       )
+cumstomer3.hash_password("sayed123")
 session.add(cumstomer3)
 session.commit()
 
 cumstomer4 = Customer(first_name="Khaled",
                       last_name="Ibrahim",
                       email="khaled@gmail.com",
-                      password="khaled123",
                       identity="12345678912365",
                       rate=0.0,
                       phone="12345698742",
                       )
+cumstomer1.hash_password("khaled123")
 session.add(cumstomer4)
 session.commit()
+
+# owner data
 
 
 print "dummy data successfully added"
