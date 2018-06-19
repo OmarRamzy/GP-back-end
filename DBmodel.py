@@ -29,15 +29,15 @@ class User(Base):
     last_name = Column(String(32), nullable=False)
     email = Column(String, nullable=False, unique=True)
     password = Column(String(64), nullable=True)
-    identity = Column(String(14), nullable=False)
+    identity = Column(String(14), nullable=False , unique=True)
     rate = Column(Float)
-    phone = Column(String(11), nullable=False)
+    phone = Column(String(11), nullable=False , unique=True)
     activated = Column(Boolean, default=False)
     type = Column(String(50))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'user',
-        'polymorphic_on': type
+        'polymorphic_identity':'user',
+        'polymorphic_on':type
     }
 
     def hash_password(self, password):
@@ -70,12 +70,25 @@ class Owner(User):
     __tablename__ = 'owner'
     id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     money_amount = Column(Integer, default=0)
-    store_id = Column(Integer, ForeignKey('store.id'),
-                      nullable=False)
-    service_type_id = Column(Integer, ForeignKey('service.id'),
-                             nullable=False)
-    store = relationship('Store')
-    service = relationship('Service')
+
+   # service_type_id = Column(Integer, ForeignKey('service.id'),
+   #                          nullable=False)
+   # service = relationship('Service')
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'identity': self.identity,
+            'rate': self.rate,
+            'phone': self.phone,
+            'activate': self.activated,
+            'money_amount': self.money_amount
+          #  'service_type_id': self.service_type_id
+        }
 
     __mapper_args__ = {
         'polymorphic_identity': 'owner',
@@ -86,9 +99,23 @@ class Store(Base):
     __tablename__ = 'store'
     id = Column(Integer, primary_key=True)
     name = Column(String(32), nullable=False)
-    location_id = Column(Integer, ForeignKey('location.id'),
-                         nullable=False)
+    type = Column(String(32), nullable=False)
+    status= Column(Boolean , default=False)
+    location_id = Column(Integer, ForeignKey('location.id'), nullable=False)
+    owner_id = Column(Integer , ForeignKey('owner.id'),nullable=False )
     location = relationship('Location')
+    owner = relationship('Owner')
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'type':self.type,
+            'owner': self.owner.serialize,
+            'status': self.status,
+            'location':self.location.serialize
+        }
 
 
 class Location(Base):
@@ -96,6 +123,14 @@ class Location(Base):
     id = Column(Integer, primary_key=True)
     lat = Column(Float(10), nullable=False)
     lang = Column(Float(10), nullable=False)
+
+    @property
+    def serialize(self):
+        return {
+                'id': self.id,
+                'lat': self.lat,
+                'lang': self.lang
+                }
 
 
 class Service(Base):
@@ -128,5 +163,32 @@ class Customer(User):
         }
 
 
+class Car(Base):
+    __tablename__= 'car'
+    id = Column(Integer, primary_key=True)
+    model = Column(String(25))
+    type = Column(String(10))
+    number = Column(String(20) , unique=True)
+    active = Column(Boolean, default=True)
+ #   licence = Column(String(25) , nullable=True)  # Don't Know type of licence
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'car',
+        'polymorphic_on': type
+    }
+
+class PrivateCar(Car):
+    __tablename__ = 'privateCar'
+    id = Column(Integer, ForeignKey('car.id') , primary_key=True)
+    store_id = Column(Integer , ForeignKey('store.id'),nullable=False )
+    store = relationship('Store')
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'privateCar',
+    }
+
+
 engine = create_engine('sqlite:///transportation.db')
 Base.metadata.create_all(engine)
+
+#print "Database Created!"
