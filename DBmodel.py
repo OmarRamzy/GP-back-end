@@ -64,6 +64,31 @@ class Owner(User):
     }
 
 
+# Customer related models
+
+class Customer(User):
+    __tablename__ = 'customer'
+    id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'customer',
+    }
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'identity': self.identity,
+            'rate': self.rate,
+            'phone': self.phone,
+            'activate': self.activated
+        }
+
+
+
 class Store(Base):
     __tablename__ = 'store'
     id = Column(Integer, primary_key=True)
@@ -108,35 +133,12 @@ class Service(Base):
     type = Column(String, nullable=False)
 
 
-# Customer related models
-
-class Customer(User):
-    __tablename__ = 'customer'
-    id = Column(Integer, ForeignKey('user.id'), primary_key=True)
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'customer',
-    }
-
-    @property
-    def serialize(self):
-        return {
-            'id': self.id,
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-            'email': self.email,
-            'identity': self.identity,
-            'rate': self.rate,
-            'phone': self.phone,
-            'activate': self.activated
-        }
-
 
 class Car(Base):
     __tablename__= 'car'
     id = Column(Integer, primary_key=True)
     model = Column(String(25))
-    type = Column(String(10))
+    type = Column(String(50))
     number = Column(String(20) , unique=True)
     active = Column(Boolean, default=True)
  #   licence = Column(String(25) , nullable=True)  # Don't Know type of licence
@@ -159,17 +161,19 @@ class PrivateCar(Car):
 
 
 class HeavyCar(Car):
-    tablename__ = 'heavyCar'
-    id = Column(Integer, ForeignKey('car.id'), primary_key=True)
-    location_id = Column(Integer, ForeignKey('location.id'), nullable=False)
-    location = relationship('Location')
-    image= Column(String(100), nullable=False)
-    owner_id = Column(Integer, ForeignKey('owner.id'), nullable=False)
-    owner = relationship('Owner')
+     __tablename__ = 'heavyCar'
+     id = Column(Integer, ForeignKey('car.id') , primary_key=True)
+     location_id = Column(Integer, ForeignKey('location.id'), nullable=False)
+     location = relationship('Location')
+     image= Column(String(100), nullable=False)
+     owner_id = Column(Integer, ForeignKey('owner.id'), nullable=False)
+     owner = relationship('Owner')
 
-    __mapper_args__ = {
+
+     __mapper_args__ = {
         'polymorphic_identity': 'heavyCar',
-    }
+     }
+
 
 
 engine = create_engine('sqlite:///transportation.db')
