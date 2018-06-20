@@ -1,10 +1,26 @@
+'''from flask import (Flask,
+                   jsonify,
+                   request,
+                   abort,
+                   url_for,
+                   g)
+# flask login
+from flask_login import (LoginManager,
+                         UserMixin,
+                         login_required,
+                         login_user,
+                         logout_user,
+                         current_user)
 import sqlite3
-from flask import Flask,request, jsonify
-from DBmodel import Base, Customer, Owner, Location , Store
+# impot sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from DBmodel import (Base,
+                     Customer,
+                     Owner,
+                     Location ,
+                     Store)
 
-from ExceptionHandler import InvalidUsage
 
 # create session and connect to DB
 engine = create_engine("sqlite:///transportation.db")
@@ -15,6 +31,32 @@ conn = sqlite3.connect('transportation.db', check_same_thread=False)
 
 # app configuration
 app = Flask(__name__)
+
+
+
+@app.route('/api/v1/customer/login', methods=['PUT'])
+def customer_login():
+    email_or_token = request.json.get('email')
+    password = request.json.get('password')
+    user_id = Customer.verify_auth_token(email_or_token)
+    if user_id:
+        user = session.query(Customer).filter_by(id=user_id).one()
+        return jsonify({'token': email_or_token})
+    else:
+        user = session.query(Customer).filter_by(email=email_or_token).first()
+        if not user or not user.verify_password(password):
+            return jsonify({'message': False})
+    g.user = user
+    token = user.generate_auth_token()
+    return jsonify({'token': token.decode('ascii')})
+
+
+def verify_customer_token(token):
+    user_id = Customer.verify_auth_token(token)
+    if user_id:
+        return True
+    return False
+
 
 
 # Function Test Current Users in System
@@ -164,17 +206,17 @@ def get_all_stores():
 
 
 #Add Location to DataBase
-@app.route('/location/new' , methods=['POST' , 'GET'])
+@app.route('/location/new', methods=['POST' , 'GET'])
 def set_location():
     location = Location(lat = request.json['lat'], lang = request.json['lang'])
-#    location = Location(lat = request.args.get['lat'], lang = request.agrs.get['lang'])
+#    location = Lohttp://0.0.0.0:8080/ cation(lat = request.args.get['lat'], lang = request.agrs.get['lang'])
     session.add(location)
     session.commit()
     return jsonify(location.serialize)
 
 
 #get Locations  **** Test Method***********
-@app.route('/locations' , methods=['GET'])
+@app.route('/locations', methods=['GET'])
 def get_all_locations():
     locations = session.query(Location).all()
     return jsonify([i.serialize for i in locations])
@@ -183,4 +225,6 @@ def get_all_locations():
 if __name__ == '__main__':
     app.secret_key = 'MUCMCJUMDPQKBHJOTFWKOKZVNZYQDFPJ'
     app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=5000)
+
+'''
